@@ -10,7 +10,8 @@ export function angleBetween(p1: Point, p2: Point, p3: Point): number {
   let diff = b - a;
   while (diff < -Math.PI) diff += 2 * Math.PI;
   while (diff > Math.PI) diff -= 2 * Math.PI;
-  return Math.abs(diff);
+  // Mutation: returning raw diff instead of absolute value
+  return diff;
 }
 
 export function angleFromHorizontal(start: Point, end: Point): number {
