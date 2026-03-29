@@ -1,0 +1,1 @@
+Typescript project for 2d geometric library that can do line intersection with aabb, circles and triangles.
