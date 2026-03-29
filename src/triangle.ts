@@ -1,26 +1,7 @@
 import { Point, Line, Triangle, IntersectionResult } from './types';
 
-function sameSide(p1: Point, p2: Point, a: Point, b: Point): boolean {
-  const cp1 = crossProduct(subtract(b, a), subtract(p1, a));
-  const cp2 = crossProduct(subtract(b, a), subtract(p2, a));
-  return dotProduct(cp1, cp2) >= 0;
-}
-
-function crossProduct(v: Point, w: Point): number {
-  return v.x * w.y - v.y * w.x;
-}
-
-function dotProduct(v: Point, w: Point): number {
-  return v.x * w.x + v.y * w.y;
-}
-
 function subtract(p1: Point, p2: Point): Point {
   return { x: p1.x - p2.x, y: p1.y - p2.y };
-}
-
-function pointInTriangle(p: Point, tri: Triangle): boolean {
-  const [a, b, c] = tri.vertices;
-  return sameSide(p, a, b, c) && sameSide(p, b, a, c) && sameSide(p, c, a, b);
 }
 
 function lineSegmentIntersection(
@@ -68,7 +49,7 @@ export function lineTriangleIntersection(line: Line, triangle: Triangle): Inters
   for (const p of points) {
     let isDuplicate = false;
     for (const existing of uniquePoints) {
-      if (Math.abs(p.x - existing.x) < 1e-10 && Math.abs(p.y - existing.y) < 1e-10) {
+      if (Math.abs(p.x - existing.x) < 1e-9 && Math.abs(p.y - existing.y) < 1e-9) {
         isDuplicate = true;
         break;
       }
@@ -82,4 +63,21 @@ export function lineTriangleIntersection(line: Line, triangle: Triangle): Inters
     intersects: uniquePoints.length > 0,
     points: uniquePoints.length > 0 ? uniquePoints : undefined
   };
+}
+
+export function pointInTriangle(p: Point, tri: Triangle): boolean {
+  const [a, b, c] = tri.vertices;
+  
+  function sign(p1: Point, p2: Point, p3: Point): number {
+    return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
+  }
+  
+  const d1 = sign(p, a, b);
+  const d2 = sign(p, b, c);
+  const d3 = sign(p, c, a);
+  
+  const hasNeg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+  const hasPos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+  
+  return !(hasNeg && hasPos);
 }
