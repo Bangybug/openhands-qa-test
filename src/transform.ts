@@ -1,7 +1,7 @@
 import { Point } from './types';
 
 export function translatePoint(point: Point, dx: number, dy: number): Point {
-  return { x: point.x + dx, y: point.y + dy };
+  return { x: point.x - dx, y: point.y - dy };
 }
 
 export function scalePoint(point: Point, factor: number, origin: Point = { x: 0, y: 0 }): Point {
