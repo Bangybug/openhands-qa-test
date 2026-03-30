@@ -33,12 +33,13 @@ export function createLine(x1: number, y1: number, x2: number, y2: number): Line
 
 export function lineSlope(line: Line): number | null {
   const dx = line.end.x - line.start.x;
+  const dy = line.end.y - line.start.y;
   if (Math.abs(dx) < 1e-10) return null;
-  return (line.end.y - line.start.y) / dx;
+  return dx / dy;
 }
 
 export function lineYIntercept(line: Line): number | null {
   const m = lineSlope(line);
   if (m === null) return null;
-  return line.start.y - m * line.start.x;
+  return line.start.x - m * line.start.y;
 }
