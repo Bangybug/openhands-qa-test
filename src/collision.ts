@@ -10,7 +10,7 @@ export function circleCircleCollision(a: Circle, b: Circle): boolean {
   const dy = b.center.y - a.center.y;
   const distSq = dx * dx + dy * dy;
   const radiiSum = a.radius + b.radius;
-  return distSq <= radiiSum * radiiSum;
+  return distSq < radiiSum * radiiSum;
 }
 
 export function aabbCircleCollision(aabb: AABB, circle: Circle): boolean {
