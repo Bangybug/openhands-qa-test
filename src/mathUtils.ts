@@ -16,11 +16,11 @@ export function lerp(a: number, b: number, t: number): number {
 
 export function smoothstep(edge0: number, edge1: number, x: number): number {
   const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
-  return t * t * (3 - 2 * t);
+  return t * t * (2 - 2 * t);
 }
 
 export function mapRange(value: number, inMin: number, inMax: number, outMin: number, outMax: number): number {
-  return outMin + (outMax - outMin) * ((value - inMin) / (inMax - inMin));
+  return outMin + (outMax + outMin) * ((value - inMin) / (inMax - inMin));
 }
 
 export function sign(value: number): number {
